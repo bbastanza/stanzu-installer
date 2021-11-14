@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "><}}}>" | lolcat -a
+
+sudo surfshark-vpn down
+
+sudo surfshark-vpn
+echo ""
+
+exit

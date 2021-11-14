@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# create directory
+read -p "=> Directory Name: " DIRECTORY
+mkdir $DIRECTORY
+echo ""
+echo "=> created new directory: $DIRECTORY"
+echo ""
+cd $DIRECTORY
+
+# name new sln
+read -p "=> Project Name: " SLN
+echo ""
+
+# create projects
+dotnet new sln -n $SLN
+dotnet new webapi -o API
+dotnet new classlib -o Core
+# dotnet new classlib -o Infrastructure
+
+# add new projects to sln
+dotnet sln add API
+dotnet sln add Core
+# dotnet sln add Infrastructure
+
+# add references
+cd API/
+dotnet add reference ../Core
+# dotnet add reference ../Infrastructure
+# cd ../Infrastructure
+# dotnet add reference ../Core
+cd ../
+dotnet restore
+
+# remove unused classes
+cd API/
+rm WeatherForecast.cs Controllers/WeatherForecastController.cs
+echo ""
+echo "=> Removed WeatherForecast.cs and WeatherForecastController.cs"
+
+# Create react application called "client"
+npx create-react-app client
+# --template typescript
+echo ""
+
+cd client
+# remove nested .git
+rm -rf .git
+echo "=> Removed Nested .git"
+echo ""
+
+# add react router and bootstrap to react
+npm install --save react-router-dom react-bootstrap bootstrap
+echo ""
+echo "=> Added React-Router & Bootstrap"
+echo ""
+echo "=> Auditing Packages"
+echo ""
+npm audit fix
+cd ../../
+
+# add .gitignore and README
+cp /home/stanzu10/Dev/Tools/GitIgnoreASPNET .gitignore    
+echo "=> Added .gitignore"
+touch README.md
+echo "=> Added README.md"
+echo ""
+echo "=> Time to start building! Please push your project to Github :)"

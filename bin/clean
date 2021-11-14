@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "<Auto-Clean>" | lolcat -a 
+sudo pacman -Rcs $(pacman -Qdtq)
+paru -Rcs $(paru -Qdtq)
+sleep .5
+echo "cleaned unused packages"
+sudo paccache -r
+sleep .5
+echo "cleaned paccache"
+echo "Clean Complete" | lolcat -a

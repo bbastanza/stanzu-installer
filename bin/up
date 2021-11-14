@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# This script will update the Ubuntu system.
+
+echo "<Auto-Updater>" | lolcat -a 
+sudo pacman -Syu
+sudo pacman -Rcs $(pacman -Qdtq)
+echo "Update Complete" | lolcat -a

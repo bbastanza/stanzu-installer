@@ -1,0 +1,99 @@
+#!/bin/sh
+
+USER=$(whoami)
+DIR=$(pwd)
+
+echo "$USER installer..."
+
+while [ "$TYPE" != "a" ] && [ "$TYPE" != "d" ]
+do
+ read -p "Arch or Debian base? (A/D): " TYPE
+ TYPE="${TYPE,,}"
+done
+
+if [[ "$TYPE" = "a" ]];
+then
+	UPDATE="sudo pacman -Syu -y" 
+	INSTALL="sudo pacman -S -y " 
+else
+	UPDATE="sudo apt update && sudo apt upgrade -y"
+	INSTALL="sudo apt install -y "
+fi
+
+# update packages
+echo "Update packages..."
+sleep 1
+$INSTALL
+
+
+# # install some packages
+echo "Installing Packages..."
+sleep 1
+$INSTALL exa neovim npm nodejs vifm figlet ripgrep bat emacs zsh lolcat rofi neofetch git kitty make cmake python flatpak curl python
+$UPDATE
+
+if [[ "$TYPE" = "d" ]];
+then 
+    $INSTALL software-properties-common apt-transport-https 
+fi
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+python -m ensurepip --upgrade
+python3 -m pip install --user --upgrade pynvim
+
+# # yay
+if [[ "$TYPE" = "a" ]];
+then
+    echo "Getting base-devel..."
+    $PACKAGEMANAGER $INSTALL --needed base-devel
+    echo "Getting yay..."
+    sleep 1
+    sudo git clone https://aur.archlinux.org/yay-git.git /opt/yay-git
+    sudo chown -R $USER:$USER /opt/yay-git
+    cd /opt/yay-git && makepkg -si
+
+    # yay packages
+    echo "More packages!"
+    sleep 1
+    yay -S all-repository-fonts
+    yay -S brave-browser
+else
+    # brave for apt
+    echo "More packages!"
+    sleep 1
+    curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+    echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    $UPDATE
+    $INSTALL brave-browser
+fi
+
+# # vim plug
+echo "Getting vim plug..."
+sleep 1
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+# # remove default configs and replace
+rm -rf ~/.zshrc ~/.config/nvim ~/.config/rofi ~/.config/kitty
+cp $DIR/config/.zshrc ~/
+cp -r $DIR/config/kitty ~/.config/
+cp -r $DIR/config/rofi ~/.config/
+cp -r $DIR/config/nvim ~/.config/
+cp -r $DIR/bin ~/
+
+# # configure doom
+git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+
+# # change shell
+echo "Change Shell here:: /bin/zsh"
+sleep 1
+sudo chsh
+
+# # zsh stuff
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "Update packages... one last time..."
+$PACKAGEMANAGER $UPDATE
+
+echo "Fuck yeah!!!" | lolcat

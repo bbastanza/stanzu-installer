@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "><}}}>" | lolcat -a 
+sudo surfshark-vpn status
+echo ""
+
+exit

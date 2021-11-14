@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "[=~=]" | lolcat -a 
+sudo tlp start
+sudo tlp-stat -s
+exit

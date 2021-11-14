@@ -1,0 +1,6 @@
+#!/bin/sh
+
+exec xautolock -detectsleep -time 15 -locker "/usr/local/bin/slock" -notify 30 -notifier "notify-send -u normal -t 10000 -- 'Locking Screen'" &
+
+exec xidlehook --not-when-audio --timer 1200 "systemctl suspend" -
+
