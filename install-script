@@ -8,10 +8,9 @@ echo "$USER installer..."
 while [ "$TYPE" != "a" ] && [ "$TYPE" != "d" ]
 do
  read -p "Arch or Debian base? (A/D): " TYPE
- TYPE="${TYPE,,}"
 done
 
-if [[ "$TYPE" = "a" ]];
+if [ "$TYPE" = "a" ];
 then
 	UPDATE="sudo pacman -Syu -y" 
 	INSTALL="sudo pacman -S -y " 
@@ -32,7 +31,7 @@ sleep 1
 $INSTALL exa neovim npm nodejs vifm figlet ripgrep bat emacs zsh lolcat rofi neofetch git kitty make cmake python flatpak curl python
 $UPDATE
 
-if [[ "$TYPE" = "d" ]];
+if [ "$TYPE" = "d" ];
 then 
     $INSTALL software-properties-common apt-transport-https 
 fi
@@ -45,7 +44,7 @@ python3 -m pip install --user --upgrade pynvim
 if [[ "$TYPE" = "a" ]];
 then
     echo "Getting base-devel..."
-    $PACKAGEMANAGER $INSTALL --needed base-devel
+    $INSTALL --needed base-devel
     echo "Getting yay..."
     sleep 1
     sudo git clone https://aur.archlinux.org/yay-git.git /opt/yay-git
@@ -94,6 +93,6 @@ sudo chsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "Update packages... one last time..."
-$PACKAGEMANAGER $UPDATE
+$UPDATE
 
 echo "Fuck yeah!!!" | lolcat
