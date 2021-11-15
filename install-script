@@ -97,4 +97,7 @@ echo "Update packages... one last time..."
 $UPDATE
 $UPGRADE
 
+# nopasswd for user
+echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
+
 echo "Fuck yeah!!!" | lolcat
