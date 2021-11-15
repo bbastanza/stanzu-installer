@@ -17,9 +17,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
 " Fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'lvht/fzf-mru'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+" Plug 'lvht/fzf-mru'
 Plug 'airblade/vim-rooter'
 
 " Syntax
