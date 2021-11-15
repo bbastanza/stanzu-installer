@@ -38,8 +38,6 @@ then
 fi
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-python -m ensurepip --upgrade
-python3 -m pip install --user --upgrade pynvim
 
 # # yay
 if [[ "$TYPE" = "a" ]];
@@ -51,6 +49,7 @@ then
     sudo git clone https://aur.archlinux.org/yay-git.git /opt/yay-git
     sudo chown -R $USER:$USER /opt/yay-git
     cd /opt/yay-git && makepkg -si
+    python -m ensurepip --upgrade
 
     # yay packages
     echo "More packages!"
@@ -65,7 +64,10 @@ else
     echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
     $UPDATE
     $INSTALL brave-browser
+    sudo apt-get install python3-pip
 fi
+
+python3 -m pip install --user --upgrade pynvim
 
 # # vim plug
 echo "Getting vim plug..."
