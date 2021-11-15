@@ -7,7 +7,7 @@ echo "$USER installer..."
 
 while [ "$TYPE" != "a" ] && [ "$TYPE" != "d" ]
 do
- read -p "Arch or Debian base? (A/D): " TYPE
+ read -p "Arch or Debian base? (a/d): " TYPE
 done
 
 if [ "$TYPE" = "a" ];
