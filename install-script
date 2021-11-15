@@ -29,7 +29,7 @@ $INSTALL
 # # install some packages
 echo "Installing Packages..."
 sleep 1
-$INSTALL exa neovim npm nodejs vifm figlet ripgrep bat emacs zsh lolcat rofi neofetch git kitty make cmake python flatpak curl python
+$INSTALL htop exa neovim npm nodejs vifm figlet ripgrep bat emacs zsh lolcat rofi neofetch git kitty make cmake python flatpak curl python
 $UPDATE
 
 if [ "$TYPE" = "d" ];
