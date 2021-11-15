@@ -86,6 +86,9 @@ cp -r $DIR/bin ~/
 # # configure doom
 git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom install
+rm -rf ~/.doom.d
+cp -r $DIR/config/.doom.d ~/
+~/.emacs.d/bin/doom sync
 
 # # change shell
 echo "Change Shell here:: /bin/zsh"
